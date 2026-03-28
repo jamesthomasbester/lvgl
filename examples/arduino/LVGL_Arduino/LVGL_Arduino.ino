@@ -3,6 +3,8 @@
 
 #include <lvgl.h>
 #include <TFT_eSPI.h>
+#include "src/demos/colour_sensor/lv_demo_colour_sensor.h"
+#include "src/demos/colour_sensor/ui.h"
 
 /*To use the built-in examples and demos of LVGL uncomment the includes below respectively.
  *You also need to copy `lvgl/examples` to `lvgl/src/examples`. Similarly for the demos `lvgl/demos` to `lvgl/src/demos`.
@@ -112,10 +114,7 @@ void setup()
     indev_drv.read_cb = my_touchpad_read;
     lv_indev_drv_register( &indev_drv );
   
-    /* Create simple label */
-    lv_obj_t *label = lv_label_create( lv_scr_act() );
-    lv_label_set_text( label, "Hello Ardino and LVGL!");
-    lv_obj_align( label, LV_ALIGN_CENTER, 0, 0 );
+    lv_demo_colour_sensor();
  
     /* Try an example. See all the examples 
      * online: https://docs.lvgl.io/master/examples.html
@@ -136,5 +135,5 @@ void setup()
 void loop()
 {
     lv_timer_handler(); /* let the GUI do its work */
-    delay( 5 );
+    ui_tick();
 }

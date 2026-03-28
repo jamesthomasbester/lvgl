@@ -35,6 +35,10 @@ extern "C" {
 #include "music/lv_demo_music.h"
 #endif
 
+#if LV_USE_DEMO_COLOUR_SENSOR
+#include "colour_sensor/lv_demo_colour_sensor.h"
+#endif
+
 /*********************
  *      DEFINES
  *********************/

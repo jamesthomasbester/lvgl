@@ -742,6 +742,7 @@
 
 /*Demonstrate the usage of encoder and keyboard*/
 #define LV_USE_DEMO_KEYPAD_AND_ENCODER 1
+#define LV_USE_DEMO_COLOUR_SENSOR 1
 
 /*Benchmark your system*/
 #define LV_USE_DEMO_BENCHMARK 1
