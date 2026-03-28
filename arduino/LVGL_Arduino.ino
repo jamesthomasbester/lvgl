@@ -75,6 +75,7 @@ void my_disp_flush( lv_disp_drv_t *disp_drv, const lv_area_t *area, lv_color_t *
 
 void example_increase_lvgl_tick(void *arg)
 {
+    /* Tell LVGL how many milliseconds has elapsed */
     lv_tick_inc(EXAMPLE_LVGL_TICK_PERIOD_MS);
 }
 
@@ -91,12 +92,8 @@ void example_increase_reboot(void *arg)
 /*Read the touchpad*/
 void my_touchpad_read( lv_indev_drv_t * indev_drv, lv_indev_data_t * data )
 {
-    // uint16_t touchX, touchY;
-
     bool touched = touch.available();
-    // touch.read_touch();
     if( !touched )
-    // if( 0!=touch.data.points )
     {
         data->state = LV_INDEV_STATE_REL;
     }
@@ -104,7 +101,6 @@ void my_touchpad_read( lv_indev_drv_t * indev_drv, lv_indev_data_t * data )
     {
         data->state = LV_INDEV_STATE_PR;
 
-        /*Set the coordinates*/
         data->point.x = touch.data.x;
         data->point.y = touch.data.y;
     }
@@ -115,15 +111,15 @@ void on_scan_colour(uint16_t r, uint16_t g, uint16_t b, uint16_t c) {
     int redValue = RGBmap(r, redCal.blackValue, redCal.whiteValue, 0, 255);
     int greenValue = RGBmap(g, greenCal.blackValue, greenCal.whiteValue, 0, 255);
     int blueValue = RGBmap(b, blueCal.blackValue, blueCal.whiteValue, 0, 255);
-    char* hexString = rgbToHex(redValue,greenValue,blueValue);
-    Serial.print("R: "); Serial.print(redValue);
-    Serial.print(" G: "); Serial.print(greenValue);
-    Serial.print(" B: "); Serial.print(blueValue);
-    Serial.print(" hex: "); Serial.println(hexString);
+    Serial.print("R: "); Serial.print(r);
+    Serial.print(" G: "); Serial.print(g);
+    Serial.print(" B: "); Serial.print(b);
+    Serial.print(" hex: "); Serial.println(rgbToHex(redValue,greenValue,blueValue));
+    set_var_hex_value(rgbToHex(redValue,greenValue,blueValue));
     eez::flow::setGlobalVariable(FLOW_GLOBAL_VARIABLE_RED_VALUE, eez::Value((int)redValue, eez::VALUE_TYPE_INT32));
     eez::flow::setGlobalVariable(FLOW_GLOBAL_VARIABLE_GREEN_VALUE, eez::Value((int)greenValue, eez::VALUE_TYPE_INT32));
     eez::flow::setGlobalVariable(FLOW_GLOBAL_VARIABLE_BLUE_VALUE, eez::Value((int)blueValue, eez::VALUE_TYPE_INT32));
-    eez::flow::setGlobalVariable(FLOW_GLOBAL_VARIABLE_HEX_VALUE, eez::Value(hexString, VALUE_TYPE_STRING));
+    eez::flow::setGlobalVariable(FLOW_GLOBAL_VARIABLE_HEX_VALUE, eez::Value(rgbToHex(redValue,greenValue,blueValue), eez::VALUE_TYPE_STRING));
 }
 
 void setup()
@@ -134,13 +130,14 @@ void setup()
     LVGL_Arduino += String('V') + lv_version_major() + "." + lv_version_minor() + "." + lv_version_patch();
 
     Serial.println( LVGL_Arduino );
+    Serial.println( "I am LVGL_Arduino" );
 
-    redCal.blackValue = 730;
-    redCal.whiteValue = 7147;
-    greenCal.blackValue = 1020;
-    greenCal.whiteValue = 12217;
-    blueCal.blackValue = 1729;
-    blueCal.whiteValue = 20051;
+    redCal.blackValue = 674;
+    redCal.whiteValue = 6369;
+    greenCal.blackValue = 925;
+    greenCal.whiteValue = 10839;
+    blueCal.blackValue = 1610;
+    blueCal.whiteValue = 18057;
 
     lv_init();
 #if LV_USE_LOG != 0
@@ -149,12 +146,6 @@ void setup()
 
     tft.begin();          /* TFT init */
     tft.setRotation( 0 ); /* Landscape orientation, flipped */
-    
-    /*Set the touchscreen calibration data,
-     the actual data for your display can be acquired using
-     the Generic -> Touch_calibrate example from the TFT_eSPI library*/
-    // uint16_t calData[5] = { 275, 3620, 264, 3532, 1 };
-    // tft.setTouch( calData );
     touch.begin();
     if (tcs.begin(TCS_ADDR, &I2C_1)) {
         Serial.println("TCS34725 found!");
@@ -182,7 +173,6 @@ void setup()
     lv_obj_t *label = lv_label_create( lv_scr_act() );
     lv_label_set_text( label, "Hello Ardino and LVGL!");
     lv_obj_align( label, LV_ALIGN_CENTER, 0, 0 );
- 
    
     const esp_timer_create_args_t lvgl_tick_timer_args = {
       .callback = &example_increase_lvgl_tick,
@@ -200,9 +190,10 @@ void setup()
 
     esp_timer_handle_t reboot_timer = NULL;
     esp_timer_create(&reboot_timer_args, &reboot_timer);
-    esp_timer_start_periodic(reboot_timer, 2000 * 1000);
-          
+    esp_timer_start_periodic(reboot_timer, 2000 * 1000);  
+    // colour sensor lvgl project import:      
     lv_demo_colour_sensor();
+    // set variables to values from sensor: 
     lv_demo_colour_sensor_set_scan_cb(on_scan_colour);
     Serial.println( "Setup done" );
 }
