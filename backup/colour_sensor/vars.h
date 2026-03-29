@@ -24,9 +24,7 @@ enum FlowGlobalVariables {
 // Native global variables
 
 extern const char *get_var_hex_value();
-extern const char *get_var_history_value(int index);
 extern void set_var_hex_value(const char *value);
-extern void set_var_history_value(const char *value);
 
 #ifdef __cplusplus
 }

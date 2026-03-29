@@ -28,11 +28,8 @@ typedef struct _objects_t {
     lv_obj_t *display_colour;
     lv_obj_t *calibration_screen;
     lv_obj_t *menu_scan_button;
-    lv_obj_t *menu_scan_label;
     lv_obj_t *menu_history_button;
-    lv_obj_t *menu_history_label;
     lv_obj_t *menu_settings_button;
-    lv_obj_t *menu_settings_label;
     lv_obj_t *obj0;
     lv_obj_t *obj1;
     lv_obj_t *obj2;
@@ -48,19 +45,13 @@ typedef struct _objects_t {
     lv_obj_t *menu_scan_button_1;
     lv_obj_t *menu_scan_button_2;
     lv_obj_t *obj4;
-    lv_obj_t *history_item_label_8;
-    lv_obj_t *history_item_label_7;
-    lv_obj_t *history_item_label_6;
-    lv_obj_t *history_item_label_5;
-    lv_obj_t *history_item_label_4;
-    lv_obj_t *history_item_label_3;
-    lv_obj_t *history_item_label_2;
-    lv_obj_t *history_item_label_1;
-    lv_obj_t *colour_select_label;
+    lv_obj_t *history_list;
     lv_obj_t *obj5;
+    lv_obj_t *colour_select_label;
     lv_obj_t *obj6;
     lv_obj_t *obj7;
     lv_obj_t *obj8;
+    lv_obj_t *obj9;
 } objects_t;
 
 extern objects_t objects;
