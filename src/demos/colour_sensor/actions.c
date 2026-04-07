@@ -25,3 +25,11 @@ void action_add_colour(lv_event_t *e) {
     }
     
 }
+
+void action_calibrate_color(lv_event_t *e) {
+    colour_cal_cb_t cb = lv_demo_colour_sensor_get_calibrate_cb();
+    if(cb){
+        uint16_t r = 0, g = 0, b = 0, c = 0;
+        cb(r, g, b, c);
+    }
+}

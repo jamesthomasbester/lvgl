@@ -10,6 +10,7 @@ extern "C" {
 extern void action_scan_colour(lv_event_t * e);
 extern void action_view_colour(lv_event_t * e);
 extern void action_add_colour(lv_event_t * e);
+extern void action_calibrate_color(lv_event_t * e);
 
 #ifdef __cplusplus
 }

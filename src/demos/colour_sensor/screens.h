@@ -7,86 +7,79 @@
 extern "C" {
 #endif
 
-// Screens
-
 enum ScreensEnum {
     _SCREEN_ID_FIRST = 1,
-    SCREEN_ID_MAIN = 1,
-    SCREEN_ID_SCAN = 2,
+    SCREEN_ID_SCAN = 1,
+    SCREEN_ID_HISTORY = 2,
     SCREEN_ID_SETTINGS = 3,
-    SCREEN_ID_HISTORY = 4,
+    SCREEN_ID_CALIBRATION = 4,
     SCREEN_ID_DISPLAY_COLOUR = 5,
-    SCREEN_ID_CALIBRATION_SCREEN = 6,
-    _SCREEN_ID_LAST = 6
+    _SCREEN_ID_LAST = 5
 };
 
 typedef struct _objects_t {
-    lv_obj_t *main;
+    // Screens
     lv_obj_t *scan;
-    lv_obj_t *settings;
     lv_obj_t *history;
+    lv_obj_t *settings;
+    lv_obj_t *calibration;
     lv_obj_t *display_colour;
-    lv_obj_t *calibration_screen;
-    lv_obj_t *menu_scan_button;
-    lv_obj_t *menu_scan_label;
-    lv_obj_t *menu_history_button;
-    lv_obj_t *menu_history_label;
-    lv_obj_t *menu_settings_button;
-    lv_obj_t *menu_settings_label;
-    lv_obj_t *obj0;
-    lv_obj_t *obj1;
-    lv_obj_t *obj2;
-    lv_obj_t *red_label;
-    lv_obj_t *green_label;
-    lv_obj_t *blue_label;
-    lv_obj_t *hex_label;
-    lv_obj_t *red_value_label;
-    lv_obj_t *green_value_label;
-    lv_obj_t *blue_value_label;
-    lv_obj_t *hex_value_label;
-    lv_obj_t *obj3;
-    lv_obj_t *menu_scan_button_1;
-    lv_obj_t *menu_scan_button_2;
-    lv_obj_t *obj4;
-    lv_obj_t *history_item_label_8;
-    lv_obj_t *history_item_label_7;
-    lv_obj_t *history_item_label_6;
-    lv_obj_t *history_item_label_5;
-    lv_obj_t *history_item_label_4;
-    lv_obj_t *history_item_label_3;
-    lv_obj_t *history_item_label_2;
-    lv_obj_t *history_item_label_1;
-    lv_obj_t *colour_select_label;
-    lv_obj_t *obj5;
-    lv_obj_t *obj6;
-    lv_obj_t *obj7;
-    lv_obj_t *obj8;
+
+    // Scan screen
+    lv_obj_t *scan_btn;
+    lv_obj_t *scan_colour_preview;
+    lv_obj_t *scan_hex_label;
+    lv_obj_t *scan_rgb_label;
+
+    // History screen
+    lv_obj_t *history_table;
+
+    // Settings screen
+    lv_obj_t *settings_calibrate_btn;
+    lv_obj_t *settings_wifi_btn;
+
+    // Calibration screen
+    lv_obj_t *cal_instruction_label;
+    lv_obj_t *cal_scan_btn;
+    lv_obj_t *cal_status_label;
+
+    // Display colour screen
+    lv_obj_t *colour_wheel;
+    lv_obj_t *colour_preview;
+    lv_obj_t *colour_hex_label;
+
+    // Status bar (shared)
+    lv_obj_t *status_wifi_label;
+    lv_obj_t *status_battery_label;
+    lv_obj_t *status_time_label;
 } objects_t;
 
 extern objects_t objects;
 
-void create_screen_main();
-void tick_screen_main();
+void create_screen_scan(void);
+void tick_screen_scan(void);
 
-void create_screen_scan();
-void tick_screen_scan();
+void create_screen_history(void);
+void tick_screen_history(void);
 
-void create_screen_settings();
-void tick_screen_settings();
+void create_screen_settings(void);
+void tick_screen_settings(void);
 
-void create_screen_history();
-void tick_screen_history();
+void create_screen_calibration(void);
+void tick_screen_calibration(void);
 
-void create_screen_display_colour();
-void tick_screen_display_colour();
+void create_screen_display_colour(void);
+void tick_screen_display_colour(void);
 
-void create_screen_calibration_screen();
-void tick_screen_calibration_screen();
-
-void tick_screen_by_id(enum ScreensEnum screenId);
 void tick_screen(int screen_index);
+void tick_screen_by_id(enum ScreensEnum screenId);
 
-void create_screens();
+void create_screens(void);
+
+// Status bar update helpers
+void status_bar_set_battery(int percent);
+void status_bar_set_wifi(bool connected);
+void status_bar_set_time(const char *time_str);
 
 #ifdef __cplusplus
 }
